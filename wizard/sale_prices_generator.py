@@ -51,6 +51,37 @@ class SalePricesGenerator(models.TransientModel):
     employee_pair_preformed_salary = fields.Float('Salary / Pair Preformed')
     cardboard_box_cost = fields.Float('Cardboard Box Cost')
     box_cost = fields.Float('Cost of Boxes', compute='_compute_box_cost')
+    price1_mm = fields.Float('Price/mm 1')
+    price2_mm = fields.Float('Price/mm 2')
+    price3_mm = fields.Float('Price/mm 3')
+    raw_material_thousand = fields.Float(
+        'Raw material per thousand', compute='_compute_raw_material_thousand')
+    labour_thousand = fields.Float(
+        'Labour force per thousand', compute='_compute_labour_thousand')
+    box_cost_thousand = fields.Float(
+        'Cost of boxes per thousand', compute='_compute_box_cost_thousand')
+    total_cost_thousand = fields.Float(
+        'Total cost per thousand', compute='_compute_total_cost_thousand')
+    sale_price_range = fields.One2many(
+        comodel_name='pky.pvc.price.range.thousand',
+        string='Range of prices per thousands'
+    )
+    min_volume_75 = fields.Float(
+        'Minimum possible due to high volume 75%',
+        compute='_compute_min_volume_75')
+    cost_roll = fields.Float('Cost per roll', compute='_compute_cost_roll')
+    sale_price_roll_40 = fields.Float(
+        'Sale price per roll 40%',
+        compute='_compute_sale_price_roll')
+    sale_price_roll_50 = fields.Float(
+        'Sale price per roll 50%',
+        compute='_compute_sale_price_roll')
+    sale_price_roll_60 = fields.Float(
+        'Sale price per roll 60%',
+        compute='_compute_sale_price_roll')
+    sale_price_roll_70 = fields.Float(
+        'Sale price per roll 70%',
+        compute='_compute_sale_price_roll')
 
     @api.depends('cut_mm')
     def _compute_thousands_per_roll(self):
@@ -106,7 +137,7 @@ class SalePricesGenerator(models.TransientModel):
 
         PkyPvcPreformed = self.env['pky.pvc.preformed']
         for rec in self:
-            if rec.thousands_qty and rec.type and rec.box_cost:
+            if rec.thousands_qty and rec.type and rec.cardboard_box_cost:
                 if rec.type == 'preformed':
                     thousand_box_by_flat_width = PkyPvcPreformed.search(
                         [('flat_width_mm', '=', rec.flat_width_mm)])
@@ -115,6 +146,97 @@ class SalePricesGenerator(models.TransientModel):
                             thousand_box_by_flat_width[0].thousands_box, 0) \
                             * rec.cardboard_box_cost
 
+    @api.depends(
+        'price1_mm',
+        'price2_mm',
+        'price3_mm',
+        'cut_mm',
+        'inks',
+        'flat_width_mm')
+    def _compute_raw_material_thousand(self):
+        """Computes value of field raw_material_thousand"""
+
+        for rec in self:
+            if rec.flat_width_mm and rec.cut_mm:
+                price = 0
+                if rec.inks == 0:
+                    price = rec.price1_mm
+                elif rec.inks == 1 or rec.inks == 2:
+                    price = rec.price2_mm
+                elif rec.inks == 3 or rec.inks == 4:
+                    price = rec.price3_mm
+
+                if price > 0:
+                    rec.raw_material_thousand = rec.flat_width_mm * price / \
+                        (500 / rec.cut_mm)
+
+    @api.depends(
+        'employee_cutting_salary',
+        'cutting_time_days',
+        'preformed_time_days',
+        'thousands_qty',
+        'employee_pair_preformed_salary')
+    def _compute_labour_thousand(self):
+        """Computes value of field labour_thousand"""
+
+        for rec in self:
+            rec.labour_thousand = (rec.employee_cutting_salary *
+                rec.cutting_time_days / rec.thousands_qty) + (
+                rec.employee_pair_preformed_salary * rec.preformed_time_days /
+                rec.thousands_qty)
+
+    @api.depends('thousands_qty', 'box_cost')
+    def _compute_box_cost_thousand(self):
+        """Computes value of field box_cost_thousand"""
+
+        for rec in self:
+            rec.box_cost_thousand = rec.box_cost / rec.thousands_qty
+
+    @api.depends(
+        'box_cost_thousand',
+        'labour_thousand',
+        'raw_material_thousand')
+    def _compute_total_cost_thousand(self):
+        """Computes value of field total_cost_thousand"""
+
+        for rec in self:
+            rec.total_cost_thousand = rec.box_cost_thousand + \
+                rec.labour_thousand + rec.raw_material_thousand
+
+    @api.depends('total_cost_thousand')
+    def _compute_min_volume_75(self):
+        """Computes value of field min_volume_75"""
+
+        for rec in self:
+            rec.min_volume_75 = round((rec.total_cost_thousand * 100) / 75, 2)
+
+    @api.depends(
+        'price1_mm',
+        'price2_mm',
+        'price3_mm',
+        'inks',
+        'flat_width_mm')
+    def _compute_cost_roll(self):
+        """Computes value of field cost_roll"""
+
+        for rec in self:
+            if rec.inks == 0:
+                rec.cost_roll = rec.flat_width_mm * rec.price1_mm
+            elif rec.inks == 1 or rec.inks == 2:
+                rec.cost_roll = rec.flat_width_mm * rec.price2_mm
+            elif rec.inks == 3 or rec.inks == 4:
+                rec.cost_roll = rec.flat_width_mm * rec.price3_mm
+
+    @api.depends('cost_roll')
+    def _compute_sale_price_roll(self):
+        """Computes value of fields sale_price_roll_40, sale_price_roll_50,
+        sale_price_roll_60, sale_price_roll_70."""
+
+        for rec in self:
+            rec.sale_price_roll_40 = rec.cost_roll / 0.4
+            rec.sale_price_roll_50 = rec.cost_roll / 0.5
+            rec.sale_price_roll_60 = rec.cost_roll / 0.6
+            rec.sale_price_roll_70 = rec.cost_roll / 0.7
 
 class PkyPvcPreformed(models.Model):
     _name = 'pky.pvc.preformed'
@@ -123,3 +245,13 @@ class PkyPvcPreformed(models.Model):
     cut_mm = fields.Float('Cut (mm)')
     standard_turn = fields.Float('Standard / Turn')
     thousands_box = fields.Float('Thousand / Box')
+
+
+class PkyPvcPriceRangeThousand(models.Model):
+    _name = 'pky.pvc.price.range.thousand'
+
+    rolls_qty = fields.Char('Quantity of Rolls')
+    from = fields.Float('From')
+    to = fields.Float('To')
+    percentage_cutting = fields.Float('Cutting percentage')
+    price = fields.Float('Sale Price')
