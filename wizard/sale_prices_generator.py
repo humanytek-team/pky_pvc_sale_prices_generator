@@ -46,6 +46,11 @@ class SalePricesGenerator(models.TransientModel):
     total_seven_rolls = fields.Float(compute='_compute_total_seven_rolls')
     qty_rolls_to_order = fields.Float(compute='_compute_qty_rolls_to_order')
     cutting_time_days = fields.Float(compute='_compute_cutting_time_days')
+    preformed_time_days = fields.Float(compute='_compute_preformed_time_days')
+    employee_cutting_salary = fields.Float('Salary of Cutting Employee')
+    employee_pair_preformed_salary = fields.Float('Salary / Pair Preformed')
+    cardboard_box_cost = fields.Float('Cardboard Box Cost')
+    box_cost = fields.Float('Cost of Boxes', compute='_compute_box_cost')
 
     @api.depends('cut_mm')
     def _compute_thousands_per_roll(self):
@@ -80,6 +85,35 @@ class SalePricesGenerator(models.TransientModel):
             if rec.thousands_qty and rec.cut_mm:
                 rec.cutting_time_days = rec.thousands_qty / \
                     ((-0,3538 * rec.cut_mm) + 110,77)
+
+    @api.depends('thousands_qty', 'type', 'flat_width_mm')
+    def _compute_preformed_time_days(self):
+        """Computes value of field preformed_time_days"""
+
+        PkyPvcPreformed = self.env['pky.pvc.preformed']
+        for rec in self:
+            if rec.thousands_qty and rec.type and rec.flat_width_mm:
+                if rec.type == 'preformed':
+                    preformed_by_flat_width = PkyPvcPreformed.search(
+                        [('flat_width_mm', '=', rec.flat_width_mm)])
+                    if preformed_by_flat_width:
+                        rec.preformed_time_days = rec.thousands_qty / \
+                            preformed_by_flat_width[0].standard_turn
+
+    @api.depends('thousands_qty', 'type', 'cardboard_box_cost', 'flat_width_mm')
+    def _compute_box_cost(self):
+        """Computes value of field box_cost"""
+
+        PkyPvcPreformed = self.env['pky.pvc.preformed']
+        for rec in self:
+            if rec.thousands_qty and rec.type and rec.box_cost:
+                if rec.type == 'preformed':
+                    thousand_box_by_flat_width = PkyPvcPreformed.search(
+                        [('flat_width_mm', '=', rec.flat_width_mm)])
+                    if thousand_box_by_flat_width:
+                        rec.box_cost = round(rec.thousands_qty / \
+                            thousand_box_by_flat_width[0].thousands_box, 0) \
+                            * rec.cardboard_box_cost
 
 
 class PkyPvcPreformed(models.Model):
