@@ -15,6 +15,7 @@
     'version': '0.1.0',
     'depends': ['sale', ],
     'data': [
+        'views/pky_pvc_preformed_view.xml',
         #'wizard/sale_prices_generator_view.xml',
     ],
     'demo': [

@@ -64,6 +64,7 @@ class SalePricesGenerator(models.TransientModel):
         'Total cost per thousand', compute='_compute_total_cost_thousand')
     sale_price_range = fields.One2many(
         comodel_name='pky.pvc.price.range.thousand',
+        inverse_name='sale_price_generator_wizard_id',
         string='Range of prices per thousands'
     )
     min_volume_75 = fields.Float(
@@ -247,11 +248,15 @@ class PkyPvcPreformed(models.Model):
     thousands_box = fields.Float('Thousand / Box')
 
 
-class PkyPvcPriceRangeThousand(models.Model):
+class PkyPvcPriceRangeThousand(models.TransientModel):
     _name = 'pky.pvc.price.range.thousand'
 
     rolls_qty = fields.Char('Quantity of Rolls')
-    from = fields.Float('From')
-    to = fields.Float('To')
+    lower_limit = fields.Float('From')
+    upper_limit = fields.Float('To')
     percentage_cutting = fields.Float('Cutting percentage')
     price = fields.Float('Sale Price')
+    sale_price_generator_wizard_id = fields.Many2one(
+        'sale.prices.generator',
+        'Sale price generator'
+    )
