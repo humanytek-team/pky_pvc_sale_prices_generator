@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="action_preformed" model="ir.actions.act_window">
+            <field name="name">Preformed</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pky.pvc.preformed</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to define a new record.
+              </p>
+            </field>
+        </record>
+
+        <record id="preformed_form" model="ir.ui.view">
+            <field name="name">preformed.form</field>
+            <field name="model">pky.pvc.preformed</field>
+            <field name="arch" type="xml">
+                <form string="Preformed">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="flat_width_mm"/>
+                                <field name="cut_mm"/>
+                            </group>
+                            <group>
+                                <field name="standard_turn"/>
+                                <field name="thousands_box"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="preformed_tree" model="ir.ui.view">
+            <field name="name">preformed.tree</field>
+            <field name="model">pky.pvc.preformed</field>
+            <field name="arch" type="xml">
+                <tree string="Preformed">
+                    <field name="flat_width_mm" />
+                    <field name="cut_mm" />
+                    <field name="standard_turn" />
+                    <field name="thousands_box" />
+                </tree>
+            </field>
+        </record>
+
+        <menuitem
+            id="menu_preformed"
+            name="Preformed PVC"
+            parent="base.menu_sales"
+            action="action_preformed"
+            sequence="15"/>
+
+    </data>
+</openerp>
