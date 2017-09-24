@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="sale_prices_generator_form_view" model="ir.ui.view">
+            <field name="name">sale.prices.generator.form</field>
+            <field name="model">sale.prices.generator</field>
+            <field name="arch" type="xml">
+                <form string="PVC Prices Generator">
+
+                    <separator string="PVC Prices Generator" />
+                    <p class="oe_grey">
+                      This wizard will generate prices based on parameters asociated to the
+                      operations of pvc.
+                    </p>
+
+                    <group>
+
+                      <group string="Quotation Characteristics" col="2">
+
+                        <group>
+                          <field name="flat_width_mm" />
+                          <field name="cut_mm" />
+                          <field name="inks" />
+                          <field name="thousands_qty" />
+                          <field name="type" />
+                          <field name="amount" />
+                          <field name="thousands_per_roll" />
+                          <field name="total_seven_rolls" />
+                          <field name="qty_rolls_to_order" />
+                        </group>
+
+                      </group>
+
+                      <group string="Retail Sales Prices" col="2">
+
+                        <group>
+                          <field name="sale_price_range" nolabel="1">
+                            <tree create="false">
+                              <field name="rolls_qty"/>
+                              <field name="lower_limit"/>
+                              <field name="upper_limit"/>
+                              <field name="percentage_cutting"/>
+                              <field name="price"/>
+                            </tree>
+                          </field>
+                        </group>
+
+                        <newline />
+                        <group>
+                          <field name="min_volume_75"/>
+                        </group>
+
+                      </group>
+
+                    </group>
+
+                    <group col="8">
+
+                      <group >
+                          <separator string="Production Time" />
+                          <newline />
+                          <field name="cutting_time_days"/>
+                          <field name="preformed_time_days"/>
+                      </group>
+
+                      <group>
+                          <separator string="Extra Info" />
+                          <newline />
+                          <field name="employee_cutting_salary"/>
+                          <field name="employee_pair_preformed_salary"/>
+                          <field name="cardboard_box_cost"/>
+                      </group>
+
+                      <group>
+                          <separator string="Order Costs" />
+                          <newline />
+                          <field name="box_cost"/>
+                      </group>
+
+                      <group>
+                          <separator string="Price/mm" />
+                          <newline />
+                          <field name="price1_mm"/>
+                          <field name="price2_mm"/>
+                          <field name="price3_mm"/>
+                      </group>
+
+                    </group>
+
+                    <group col="8">
+
+                      <group>
+                          <separator string="Prices per rolls" />
+                          <newline />
+                          <field name="sale_price_roll_40"/>
+                          <field name="sale_price_roll_50"/>
+                          <field name="sale_price_roll_60"/>
+                          <field name="sale_price_roll_70"/>
+                          <field name="cost_roll"/>
+                      </group>
+
+                      <group>
+                          <separator string="Costs per thousand" />
+                          <newline />
+                          <field name="raw_material_thousand"/>
+                          <field name="labour_thousand"/>
+                          <field name="box_cost_thousand"/>
+                          <field name="total_cost_thousand"/>
+                      </group>
+
+                    </group>
+
+                    <footer>
+                        <button
+                          string="Cancel"
+                          class="oe_link"
+                          special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_sale_prices_generator" model="ir.actions.act_window">
+            <field name="name">Prices Generator</field>
+            <field name="res_model">sale.prices.generator</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="sale_prices_generator_form_view"/>
+            <field name="target">current</field>
+        </record>
+
+        <menuitem
+            sequence="10"
+            parent="base.menu_sales"
+            id="menu_action_sale_prices_generator"
+            action="action_sale_prices_generator"/>
+
+    </data>
+</openerp>
