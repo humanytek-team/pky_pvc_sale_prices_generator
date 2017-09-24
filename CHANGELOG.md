@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [1.1.0] - 2017-09-24
+### added
+- Adds translation of terms to es_MX.
+
 ## [1.0.0] - 2017-09-24
 ### added
 - Adds a wizard that allow generate new prices based on parameters asociated to the operations of the company.
