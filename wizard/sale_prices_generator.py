@@ -34,26 +34,30 @@ class SalePricesGenerator(models.TransientModel):
     _description = """This wizard will generate quotations based on parameters
     asociated to the operations of pvc."""
 
-    flat_width_mm = fields.Float('Flat Width (mm)')
-    cut_mm = fields.Float('Cut (mm)')
+    flat_width_mm = fields.Float('Flat Width (mm)', default=120)
+    cut_mm = fields.Float('Cut (mm)', default=40)
     inks = fields.Float('Inks')
-    thousands_qty = fields.Float('Quantity of thousands')
+    thousands_qty = fields.Float('Quantity of thousands', default=1)
     type = fields.Selection(
         [('guarantee_seal', 'Guanrantee Seal'), ('preformed', 'Preformed'),],
-        'Type')
+        'Type', default='preformed')
     amount = fields.Float('Amount')
     thousands_per_roll = fields.Float(compute='_compute_thousands_per_roll')
-    total_seven_rolls = fields.Float(compute='_compute_total_seven_rolls')
+    total_seven_rolls = fields.Float(
+        string="Total of Thousands in seven rolls",
+        compute='_compute_total_seven_rolls')
     qty_rolls_to_order = fields.Float(compute='_compute_qty_rolls_to_order')
     cutting_time_days = fields.Float(compute='_compute_cutting_time_days')
     preformed_time_days = fields.Float(compute='_compute_preformed_time_days')
-    employee_cutting_salary = fields.Float('Salary of Cutting Employee')
-    employee_pair_preformed_salary = fields.Float('Salary / Pair Preformed')
-    cardboard_box_cost = fields.Float('Cardboard Box Cost')
+    employee_cutting_salary = fields.Float(
+        'Salary of Cutting Employee', default=330)
+    employee_pair_preformed_salary = fields.Float(
+        'Salary / Pair Preformed', default=420)
+    cardboard_box_cost = fields.Float('Cardboard Box Cost', default=18.50)
     box_cost = fields.Float('Cost of Boxes', compute='_compute_box_cost')
-    price1_mm = fields.Float('Price/mm 1')
-    price2_mm = fields.Float('Price/mm 2')
-    price3_mm = fields.Float('Price/mm 3')
+    price1_mm = fields.Float('Price/mm 1', default=5.72)
+    price2_mm = fields.Float('Price/mm 2', default=5.85)
+    price3_mm = fields.Float('Price/mm 3', default=6.35)
     raw_material_thousand = fields.Float(
         'Raw material per thousand', compute='_compute_raw_material_thousand')
     labour_thousand = fields.Float(
@@ -98,7 +102,7 @@ class SalePricesGenerator(models.TransientModel):
 
         for rec in self:
             if rec.thousands_per_roll:
-                rec.total_seven_rolls = thousands_per_roll * 7
+                rec.total_seven_rolls = rec.thousands_per_roll * 7
 
     @api.depends('thousands_qty', 'thousands_per_roll')
     def _compute_qty_rolls_to_order(self):
@@ -107,7 +111,7 @@ class SalePricesGenerator(models.TransientModel):
         for rec in self:
             if rec.thousands_qty and rec.thousands_per_roll:
                 rec.qty_rolls_to_order = \
-                    rec.thousands_qty / rec.thousands_per_roll
+                    round(rec.thousands_qty / rec.thousands_per_roll, 1)
 
     @api.depends('thousands_qty', 'cut_mm')
     def _compute_cutting_time_days(self):
@@ -116,7 +120,7 @@ class SalePricesGenerator(models.TransientModel):
         for rec in self:
             if rec.thousands_qty and rec.cut_mm:
                 rec.cutting_time_days = rec.thousands_qty / \
-                    ((-0,3538 * rec.cut_mm) + 110,77)
+                    ((-0.3538 * rec.cut_mm) + 110.77)
 
     @api.depends('thousands_qty', 'type', 'flat_width_mm')
     def _compute_preformed_time_days(self):
@@ -238,6 +242,64 @@ class SalePricesGenerator(models.TransientModel):
             rec.sale_price_roll_50 = rec.cost_roll / 0.5
             rec.sale_price_roll_60 = rec.cost_roll / 0.6
             rec.sale_price_roll_70 = rec.cost_roll / 0.7
+
+    @api.onchange(
+        'thousands_per_roll',
+        'total_cost_thousand',
+        'total_seven_rolls')
+    def _set_value_sale_price_range(self):
+        
+        range1 = {
+            'rolls_qty': 1,
+            'lower_limit': 1,
+            'upper_limit': self.thousands_per_roll,
+            'percentage_cutting': 40,
+            'price': round(self.total_cost_thousand * 100 / 40, 2),
+        }
+
+        range2 = {
+            'rolls_qty': 2,
+            'lower_limit': self.thousands_per_roll,
+            'upper_limit': self.thousands_per_roll + self.thousands_per_roll,
+            'percentage_cutting': 45,
+            'price': round(self.total_cost_thousand * 100 / 45, 2),
+        }
+
+        range3 = {
+            'rolls_qty': 3,
+            'lower_limit': self.thousands_per_roll + self.thousands_per_roll,
+            'upper_limit': (self.thousands_per_roll + self.thousands_per_roll) \
+                + self.thousands_per_roll,
+            'percentage_cutting': 50,
+            'price': round(self.total_cost_thousand * 100 / 50, 2),
+        }
+
+        range4 = {
+            'rolls_qty': 7,
+            'lower_limit': (self.thousands_per_roll + self.thousands_per_roll) \
+                + self.thousands_per_roll,
+            'upper_limit': self.total_seven_rolls,
+            'percentage_cutting': 55,
+            'price': round(self.total_cost_thousand * 100 / 55, 2),
+        }
+
+        range5 = {
+            'rolls_qty': 14,
+            'lower_limit': self.total_seven_rolls,
+            'upper_limit': self.total_seven_rolls * 2,
+            'percentage_cutting': 60,
+            'price': round(self.total_cost_thousand * 100 / 60, 2),
+        }
+
+        value = [
+            (0, 0, range1),
+            (0, 0, range2),
+            (0, 0, range3),
+            (0, 0, range4),
+            (0, 0, range5),
+            ]
+
+        self.sale_price_range = value
 
 class PkyPvcPreformed(models.Model):
     _name = 'pky.pvc.preformed'

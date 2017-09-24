@@ -14,9 +14,9 @@
     'category': 'Sales Management',
     'version': '0.1.0',
     'depends': ['sale', ],
-    'data': [
+    'data': [        
         'views/pky_pvc_preformed_view.xml',
-        #'wizard/sale_prices_generator_view.xml',
+        'wizard/sale_prices_generator_view.xml',
     ],
     'demo': [
         'data/pky.pvc.preformed.csv',
