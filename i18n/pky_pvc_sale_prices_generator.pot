@@ -1,0 +1,347 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* pky_pvc_sale_prices_generator
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0-20170207\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-09-24 15:13+0000\n"
+"PO-Revision-Date: 2017-09-24 15:13+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: pky_pvc_sale_prices_generator
+#: model:ir.actions.act_window,help:pky_pvc_sale_prices_generator.action_preformed
+msgid "<p class=\"oe_view_nocontent_create\">\n"
+"                Click to define a new record.\n"
+"              </p>\n"
+"            "
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: field:sale.prices.generator,amount:0
+msgid "Amount"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: view:sale.prices.generator:pky_pvc_sale_prices_generator.sale_prices_generator_form_view
+msgid "Cancel"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: field:sale.prices.generator,cardboard_box_cost:0
+msgid "Cardboard Box Cost"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: field:sale.prices.generator,box_cost:0
+msgid "Cost of Boxes"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: field:sale.prices.generator,box_cost_thousand:0
+msgid "Cost of boxes per thousand"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: field:sale.prices.generator,cost_roll:0
+msgid "Cost per roll"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: view:sale.prices.generator:pky_pvc_sale_prices_generator.sale_prices_generator_form_view
+msgid "Costs per thousand"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: field:pky.pvc.preformed,create_uid:0
+#: field:pky.pvc.price.range.thousand,create_uid:0
+#: field:sale.prices.generator,create_uid:0
+msgid "Created by"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: field:pky.pvc.preformed,create_date:0
+#: field:pky.pvc.price.range.thousand,create_date:0
+#: field:sale.prices.generator,create_date:0
+msgid "Created on"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: field:pky.pvc.preformed,cut_mm:0
+#: field:sale.prices.generator,cut_mm:0
+msgid "Cut (mm)"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: field:pky.pvc.price.range.thousand,percentage_cutting:0
+msgid "Cutting percentage"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: field:sale.prices.generator,cutting_time_days:0
+msgid "Cutting time days"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: field:pky.pvc.preformed,display_name:0
+#: field:pky.pvc.price.range.thousand,display_name:0
+#: field:sale.prices.generator,display_name:0
+msgid "Display Name"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: view:sale.prices.generator:pky_pvc_sale_prices_generator.sale_prices_generator_form_view
+msgid "Extra Info"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: field:pky.pvc.preformed,flat_width_mm:0
+#: field:sale.prices.generator,flat_width_mm:0
+msgid "Flat Width (mm)"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: field:pky.pvc.price.range.thousand,lower_limit:0
+msgid "From"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: selection:sale.prices.generator,type:0
+msgid "Guanrantee Seal"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: field:pky.pvc.preformed,id:0
+#: field:pky.pvc.price.range.thousand,id:0
+#: field:sale.prices.generator,id:0
+msgid "ID"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: field:sale.prices.generator,inks:0
+msgid "Inks"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: field:sale.prices.generator,labour_thousand:0
+msgid "Labour force per thousand"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: field:pky.pvc.preformed,__last_update:0
+#: field:pky.pvc.price.range.thousand,__last_update:0
+#: field:sale.prices.generator,__last_update:0
+msgid "Last Modified on"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: field:pky.pvc.preformed,write_uid:0
+#: field:pky.pvc.price.range.thousand,write_uid:0
+#: field:sale.prices.generator,write_uid:0
+msgid "Last Updated by"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: field:pky.pvc.preformed,write_date:0
+#: field:pky.pvc.price.range.thousand,write_date:0
+#: field:sale.prices.generator,write_date:0
+msgid "Last Updated on"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: field:sale.prices.generator,min_volume_75:0
+msgid "Minimum possible due to high volume 75%"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: view:sale.prices.generator:pky_pvc_sale_prices_generator.sale_prices_generator_form_view
+msgid "Order Costs"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: view:sale.prices.generator:pky_pvc_sale_prices_generator.sale_prices_generator_form_view
+msgid "PVC Prices Generator"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: model:ir.actions.act_window,name:pky_pvc_sale_prices_generator.action_preformed
+#: view:pky.pvc.preformed:pky_pvc_sale_prices_generator.preformed_form
+#: view:pky.pvc.preformed:pky_pvc_sale_prices_generator.preformed_tree
+#: selection:sale.prices.generator,type:0
+msgid "Preformed"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: model:ir.ui.menu,name:pky_pvc_sale_prices_generator.menu_preformed
+msgid "Preformed PVC"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: field:sale.prices.generator,preformed_time_days:0
+msgid "Preformed time days"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: view:sale.prices.generator:pky_pvc_sale_prices_generator.sale_prices_generator_form_view
+msgid "Price/mm"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: field:sale.prices.generator,price1_mm:0
+msgid "Price/mm 1"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: field:sale.prices.generator,price2_mm:0
+msgid "Price/mm 2"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: field:sale.prices.generator,price3_mm:0
+msgid "Price/mm 3"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: model:ir.actions.act_window,name:pky_pvc_sale_prices_generator.action_sale_prices_generator
+#: model:ir.ui.menu,name:pky_pvc_sale_prices_generator.menu_action_sale_prices_generator
+msgid "Prices Generator"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: view:sale.prices.generator:pky_pvc_sale_prices_generator.sale_prices_generator_form_view
+msgid "Prices per rolls"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: view:sale.prices.generator:pky_pvc_sale_prices_generator.sale_prices_generator_form_view
+msgid "Production Time"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: field:sale.prices.generator,qty_rolls_to_order:0
+msgid "Qty rolls to order"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: field:pky.pvc.price.range.thousand,rolls_qty:0
+msgid "Quantity of Rolls"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: field:sale.prices.generator,thousands_qty:0
+msgid "Quantity of thousands"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: view:sale.prices.generator:pky_pvc_sale_prices_generator.sale_prices_generator_form_view
+msgid "Quotation Characteristics"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: field:sale.prices.generator,sale_price_range:0
+msgid "Range of prices per thousands"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: field:sale.prices.generator,raw_material_thousand:0
+msgid "Raw material per thousand"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: view:sale.prices.generator:pky_pvc_sale_prices_generator.sale_prices_generator_form_view
+msgid "Retail Sales Prices"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: field:sale.prices.generator,employee_pair_preformed_salary:0
+msgid "Salary / Pair Preformed"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: field:sale.prices.generator,employee_cutting_salary:0
+msgid "Salary of Cutting Employee"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: field:pky.pvc.price.range.thousand,price:0
+msgid "Sale Price"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: field:pky.pvc.price.range.thousand,sale_price_generator_wizard_id:0
+msgid "Sale price generator"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: field:sale.prices.generator,sale_price_roll_40:0
+msgid "Sale price per roll 40%"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: field:sale.prices.generator,sale_price_roll_50:0
+msgid "Sale price per roll 50%"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: field:sale.prices.generator,sale_price_roll_60:0
+msgid "Sale price per roll 60%"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: field:sale.prices.generator,sale_price_roll_70:0
+msgid "Sale price per roll 70%"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: field:pky.pvc.preformed,standard_turn:0
+msgid "Standard / Turn"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: view:sale.prices.generator:pky_pvc_sale_prices_generator.sale_prices_generator_form_view
+msgid "This wizard will generate prices based on parameters asociated to the\n"
+"                      operations of pvc."
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: model:ir.model,name:pky_pvc_sale_prices_generator.model_sale_prices_generator
+msgid "This wizard will generate quotations based on parameters\n"
+"    asociated to the operations of pvc."
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: field:pky.pvc.preformed,thousands_box:0
+msgid "Thousand / Box"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: field:sale.prices.generator,thousands_per_roll:0
+msgid "Thousands per roll"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: field:pky.pvc.price.range.thousand,upper_limit:0
+msgid "To"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: field:sale.prices.generator,total_cost_thousand:0
+msgid "Total cost per thousand"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: field:sale.prices.generator,total_seven_rolls:0
+msgid "Total of Thousands in seven rolls"
+msgstr ""
+
+#. module: pky_pvc_sale_prices_generator
+#: field:sale.prices.generator,type:0
+msgid "Type"
+msgstr ""
+
