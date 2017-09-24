@@ -12,7 +12,7 @@
     'author': "Humanytek",
     'website': "http://www.humanytek.com",
     'category': 'Sales Management',
-    'version': '1.0.0',
+    'version': '1.1.0',
     'depends': ['sale', ],
     'data': [
         'views/pky_pvc_preformed_view.xml',
